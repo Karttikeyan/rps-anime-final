@@ -1,7 +1,8 @@
 import type { Config } from "@react-router/dev/config";
 
 export default {
-  // Config options...
-  // Server-side render by default, to enable SPA mode set this to `false`
-  ssr: true,
+  // Static site generation for Vercel
+  ssr: false,
+  // Base path for deployment
+  basename: process.env.NODE_ENV === "production" ? "/" : undefined,
 } satisfies Config;
