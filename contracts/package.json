@@ -1,0 +1,13 @@
+{
+  "name": "rps-contracts",
+  "version": "1.0.0",
+  "type": "commonjs",
+  "scripts": {
+    "compile": "npx hardhat compile",
+    "deploy": "npx hardhat run scripts/deploy.cjs --network baseSepolia"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^2.0.0",
+    "hardhat": "^2.19.0"
+  }
+}
