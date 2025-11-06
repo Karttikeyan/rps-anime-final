@@ -1,9 +1,0 @@
-{
-  "version": 2,
-  "rewrites": [
-    {
-      "source": "/.well-known/fercaster.json",
-      "destination": "/api/.well-known/fercaster"
-    }
-  ]
-}
