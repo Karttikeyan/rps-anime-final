@@ -1,9 +1,13 @@
 {
   "version": 2,
-  "rewrites": [
+  "routes": [
     {
-      "source": "/.well-known/(.*)",
-      "destination": "/.well-known/$1"
+      "src": "/.well-known/fercaster.json",
+      "dest": "https://karttikeyan.github.io/farcaster-manifest/.well-known/fercaster.json"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
     }
   ]
 }
