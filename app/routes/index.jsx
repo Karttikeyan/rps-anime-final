@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import FarcasterAuth from '../components/FarcasterAuth';
 
 export default function GamePage() {
   const [account, setAccount] = useState(null);
@@ -161,6 +162,17 @@ export default function GamePage() {
             ✅ {account.slice(0, 6)}...{account.slice(-4)}
           </div>
         )}
+      </div>
+
+      {/* Integración Farcaster */}
+      <div style={{
+        position: 'absolute',
+        top: '80px',
+        right: '20px',
+        zIndex: 10,
+        width: '300px'
+      }}>
+        <FarcasterAuth />
       </div>
 
       <h1 style={{

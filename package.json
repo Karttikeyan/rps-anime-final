@@ -9,6 +9,7 @@
     "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {
+    "@farcaster/connect-kit": "^0.0.31",
     "@openzeppelin/contracts": "^5.4.0",
     "@react-router/node": "^7.9.2",
     "@react-router/serve": "^7.9.2",
