@@ -3,37 +3,22 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "react-router build && xcopy public\\.well-known build\\.well-known /E /I /Y",
-    "dev": "react-router dev",
-    "start": "react-router-serve ./build/server/index.js",
-    "typecheck": "react-router typegen && tsc"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
-    "@farcaster/connect-kit": "^0.0.31",
-    "@openzeppelin/contracts": "^5.4.0",
-    "@react-router/node": "^7.9.2",
-    "@react-router/serve": "^7.9.2",
-    "isbot": "^5.1.31",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1",
-    "react-router": "^7.9.2"
+    "react-dom": "^19.1.1"
   },
   "devDependencies": {
-    "@nomicfoundation/hardhat-toolbox": "^6.1.0",
-    "@react-router/dev": "^7.9.2",
-    "@tailwindcss/vite": "^4.1.13",
-    "@types/node": "^22",
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
-    "hardhat": "^2.27.0",
-    "tailwindcss": "^4.1.13",
-    "typescript": "^5.9.2",
-    "vite": "^7.1.7",
-    "vite-tsconfig-paths": "^5.1.4"
+    "@vitejs/plugin-react": "^4.3.3",
+    "vite": "^7.1.7"
   },
   "version": "1.0.0",
-  "description": "A modern, production-ready template for building full-stack React applications using React Router.",
-  "main": "hardhat.config.js",
+  "description": "RPS Anime Game",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Karttikeyan/rps-anime-final.git"

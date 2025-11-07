@@ -1,3 +1,4 @@
+import React from 'react';  // ← AÑADE ESTA LÍNEA
 import {
   isRouteErrorResponse,
   Links,
@@ -6,11 +7,8 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
-import { ConnectKitProvider } from '@farcaster/connect-kit';
-import '@farcaster/connect-kit/styles.css';
 
 import type { Route } from "./+types/root";
-import "./app.css";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -44,11 +42,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return (
-    <ConnectKitProvider>
-      <Outlet />
-    </ConnectKitProvider>
-  );
+  return <Outlet />;
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
@@ -68,11 +62,11 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   }
 
   return (
-    <main className="pt-16 p-4 container mx-auto">
+    <main style={{ paddingTop: '4rem', padding: '1rem', maxWidth: '1200px', margin: '0 auto' }}>
       <h1>{message}</h1>
       <p>{details}</p>
       {stack && (
-        <pre className="w-full p-4 overflow-x-auto">
+        <pre style={{ width: '100%', padding: '1rem', overflowX: 'auto' }}>
           <code>{stack}</code>
         </pre>
       )}

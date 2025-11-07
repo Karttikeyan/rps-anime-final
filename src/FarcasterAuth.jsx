@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react';  // ← AÑADE ESTA LÍNEA
 import { useState } from 'react';
 
 export default function FarcasterAuth() {
@@ -7,7 +7,7 @@ export default function FarcasterAuth() {
 
   const handleSignIn = async () => {
     setIsSigningIn(true);
-    // Simulación simple - en producción esto se conectaría con Farcaster
+    // Simulación - en producción conectarías con Farcaster real
     setTimeout(() => {
       setIsConnected(true);
       setIsSigningIn(false);
@@ -18,7 +18,6 @@ export default function FarcasterAuth() {
     setIsConnected(false);
   };
 
-  // Estado de carga
   if (isSigningIn) {
     return (
       <div style={{ 
@@ -33,7 +32,6 @@ export default function FarcasterAuth() {
     );
   }
 
-  // Usuario conectado
   if (isConnected) {
     return (
       <div style={{ 
@@ -64,7 +62,6 @@ export default function FarcasterAuth() {
     );
   }
 
-  // Botón de login
   return (
     <div style={{ 
       padding: '20px', 

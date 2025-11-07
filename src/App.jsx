@@ -1,8 +1,8 @@
 import React from 'react';  // ← AÑADE ESTA LÍNEA
 import { useState } from 'react';
-import FarcasterAuth from '../components/FarcasterAuth';
+import FarcasterAuth from './FarcasterAuth';
 
-export default function GamePage() {
+function GamePage() {
   const [account, setAccount] = useState(null);
   const [loading, setLoading] = useState(false);
   const [gameState, setGameState] = useState('ready'); // ready, playing, result
@@ -327,3 +327,5 @@ export default function GamePage() {
     </div>
   );
 }
+
+export default GamePage;
