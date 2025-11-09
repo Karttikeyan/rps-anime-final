@@ -17,25 +17,30 @@
     <meta name="twitter:title" content="RPS Anime Game 🎮" />
     <meta name="twitter:description" content="Play Rock Paper Scissors with anime style!" />
     <meta name="twitter:image" content="https://rps-anime-final.vercel.app/rock.jpg" />
-    
-    <!-- ELIMINADOS los meta tags de frame que causan conflicto -->
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
     
-    <!-- 🔥 AÑADIDO: Script Farcaster SDK para resolver "Ready not called" -->
-    <script src="https://plau.github.io/farcaster-frame/sdk.js"></script>
+    <!-- 🔥 SDK FARCASTER MEJORADO -->
     <script>
-      // Inicializar Farcaster SDK cuando el DOM esté listo
-      document.addEventListener('DOMContentLoaded', function() {
-        if (window.farcaster && window.farcaster.actions && typeof window.farcaster.actions.ready === 'function') {
-          console.log('✅ Farcaster SDK ready() called');
-          window.farcaster.actions.ready();
-        } else {
-          console.log('ℹ️ Farcaster SDK not available in this context');
-        }
-      });
+      // Cargar SDK dinámicamente desde unpkg
+      (function() {
+        var script = document.createElement('script');
+        script.src = 'https://unpkg.com/@farcaster/frame-sdk@0.1.12';
+        script.onload = function() {
+          if (window.farcaster && window.farcaster.actions) {
+            console.log('✅ Farcaster SDK loaded successfully');
+            window.farcaster.actions.ready();
+          } else {
+            console.log('❌ Farcaster SDK loaded but not properly initialized');
+          }
+        };
+        script.onerror = function() {
+          console.log('❌ Failed to load Farcaster SDK');
+        };
+        document.head.appendChild(script);
+      })();
     </script>
   </body>
 </html>
