@@ -1,10 +1,15 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { useSignIn, useProfile, useUser } from '@farcaster/frame-react'; // 🔥 AÑADIR estos imports
 import { useFarcaster } from './useFarcaster';
 import FarcasterFrame from './FarcasterFrame';
 
 function GamePage() {
   const { isConnected, userData, connect } = useFarcaster();
+  const { signIn } = useSignIn(); // 🔥 AÑADIR
+  const { profile } = useProfile(); // 🔥 AÑADIR  
+  const { user, isSigningIn } = useUser(); // 🔥 AÑADIR
+  
   const [isInFrame, setIsInFrame] = useState(false);
   const [account, setAccount] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -12,6 +17,14 @@ function GamePage() {
   const [playerChoice, setPlayerChoice] = useState(null);
   const [aiChoice, setAiChoice] = useState(null);
   const [result, setResult] = useState('');
+
+  // 🔥 AÑADIDO: Notificar a Farcaster que la app está lista
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.farcaster) {
+      window.farcaster.actions.ready();
+      console.log('Farcaster SDK ready called');
+    }
+  }, []);
 
   // Detectar si estamos dentro del frame de Farcaster
   useEffect(() => {
