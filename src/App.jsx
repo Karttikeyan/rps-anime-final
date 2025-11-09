@@ -1,23 +1,39 @@
-import React from 'react';  // ← AÑADE ESTA LÍNEA
-import { useState } from 'react';
-import FarcasterAuth from './FarcasterAuth';
+import React from 'react';
+import { useState, useEffect } from 'react';
+import { useFarcaster } from './useFarcaster';
+import FarcasterFrame from './FarcasterFrame';
 
 function GamePage() {
+  const { isConnected, userData, connect } = useFarcaster();
+  const [isInFrame, setIsInFrame] = useState(false);
   const [account, setAccount] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [gameState, setGameState] = useState('ready'); // ready, playing, result
+  const [gameState, setGameState] = useState('ready');
   const [playerChoice, setPlayerChoice] = useState(null);
   const [aiChoice, setAiChoice] = useState(null);
   const [result, setResult] = useState('');
 
-  // Opciones del juego
+  // Detectar si estamos dentro del frame de Farcaster
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const isFarcasterFrame = urlParams.get('farcaster') === 'frame' || 
+                            window.location.href.includes('farcaster') ||
+                            document.referrer.includes('warpcast.com');
+    
+    setIsInFrame(isFarcasterFrame);
+  }, []);
+
+  // Si estamos dentro del frame de Farcaster, mostrar componente especial
+  if (isInFrame) {
+    return <FarcasterFrame />;
+  }
+
   const choices = [
     { id: 'rock', name: 'Piedra', emoji: '🪨', color: '#00ffff' },
     { id: 'paper', name: 'Papel', emoji: '📄', color: '#00ff00' },
     { id: 'scissors', name: 'Tijera', emoji: '✂️', color: '#ff00ff' }
   ];
 
-  // Función SEGURA para conectar MetaMask
   const connectMetaMask = async () => {
     setLoading(true);
     try {
@@ -44,19 +60,16 @@ function GamePage() {
     }
   };
 
-  // Jugar contra IA
-  const playGame = (playerChoiceId) => {
-    if (!account) return;
+  const playGame = async (playerChoiceId) => {
+    if (!account && !isConnected) return;
 
     setGameState('playing');
     setPlayerChoice(playerChoiceId);
 
-    // IA elige aleatoriamente
     const aiChoiceId = choices[Math.floor(Math.random() * 3)].id;
     setAiChoice(aiChoiceId);
 
-    // Determinar resultado
-    setTimeout(() => {
+    setTimeout(async () => {
       let gameResult = '';
       
       if (playerChoiceId === aiChoiceId) {
@@ -74,18 +87,17 @@ function GamePage() {
       setResult(gameResult);
       setGameState('result');
 
-      // Si gana, simular minting de NFT
-      if (gameResult === 'ganaste') {
-        setTimeout(() => {
-          if (window.confirm('🎉 ¡Ganaste! ¿Quieres mintear un NFT especial?')) {
-            alert('🚀 NFT minteado con éxito! (Simulación)');
-          }
-        }, 1000);
+      // Compartir en Farcaster si gana
+      if (gameResult === 'ganaste' && isConnected) {
+        if (window.confirm('🎉 ¡Ganaste! ¿Quieres compartir en Farcaster?')) {
+          // Simular compartir en Farcaster
+          const shareUrl = `https://warpcast.com/~/compose?text=${encodeURIComponent(`🎮 ¡Acabo de ganar en RPS Anime Game! Elegí ${playerChoiceId} vs ${aiChoiceId} de la IA. ¡Juega en: https://rps-anime-final.vercel.app`)}`;
+          window.open(shareUrl, '_blank');
+        }
       }
     }, 1500);
   };
 
-  // Reiniciar juego
   const resetGame = () => {
     setGameState('ready');
     setPlayerChoice(null);
@@ -110,7 +122,7 @@ function GamePage() {
       position: 'relative',
       overflow: 'hidden'
     }}>
-      {/* Efectos de partículas animadas */}
+      {/* Efectos de partículas */}
       <div style={{
         position: 'absolute',
         top: 0,
@@ -125,7 +137,7 @@ function GamePage() {
         animation: 'float 6s ease-in-out infinite'
       }}></div>
 
-      {/* Botón de conexión MetaMask */}
+      {/* Botón MetaMask */}
       <div style={{
         position: 'absolute',
         top: '20px',
@@ -165,15 +177,43 @@ function GamePage() {
         )}
       </div>
 
-      {/* Integración Farcaster */}
+      {/* Botón Farcaster */}
       <div style={{
         position: 'absolute',
         top: '80px',
         right: '20px',
-        zIndex: 10,
-        width: '300px'
+        zIndex: 10
       }}>
-        <FarcasterAuth />
+        {!isConnected ? (
+          <button
+            onClick={connect}
+            style={{
+              background: 'linear-gradient(45deg, #8a2be2, #4b0082)',
+              color: 'white',
+              border: 'none',
+              padding: '12px 20px',
+              borderRadius: '25px',
+              fontSize: '14px',
+              fontWeight: 'bold',
+              cursor: 'pointer',
+              boxShadow: '0 0 20px rgba(138, 43, 226, 0.5)'
+            }}
+          >
+            🔗 Conectar Farcaster
+          </button>
+        ) : (
+          <div style={{
+            background: 'rgba(0, 255, 0, 0.2)',
+            color: 'white',
+            padding: '12px 20px',
+            borderRadius: '25px',
+            fontSize: '14px',
+            backdropFilter: 'blur(10px)',
+            border: '2px solid #00ff00'
+          }}>
+            ✅ {userData?.displayName || 'Usuario Farcaster'}
+          </div>
+        )}
       </div>
 
       <h1 style={{
@@ -188,7 +228,7 @@ function GamePage() {
         ⚔️ Anime Rock Paper Scissors 🎴
       </h1>
 
-      {/* Área de juego */}
+      {/* Área de juego - CON IMÁGENES LOCALES */}
       <div style={{
         display: 'flex',
         justifyContent: 'center',
@@ -201,17 +241,17 @@ function GamePage() {
           <button
             key={choice.id}
             onClick={() => playGame(choice.id)}
-            disabled={!account || gameState === 'playing'}
+            disabled={(!account && !isConnected) || gameState === 'playing'}
             style={{
               background: 'none',
               border: 'none',
-              cursor: (account && gameState !== 'playing') ? 'pointer' : 'not-allowed',
+              cursor: ((account || isConnected) && gameState !== 'playing') ? 'pointer' : 'not-allowed',
               transition: 'transform 0.3s ease',
-              filter: (account && gameState !== 'playing') ? `drop-shadow(0 0 10px ${choice.color})` : 'grayscale(1)',
-              opacity: (account && gameState !== 'playing') ? 1 : 0.6
+              filter: ((account || isConnected) && gameState !== 'playing') ? `drop-shadow(0 0 10px ${choice.color})` : 'grayscale(1)',
+              opacity: ((account || isConnected) && gameState !== 'playing') ? 1 : 0.6
             }}
-            onMouseOver={(e) => (account && gameState !== 'playing') && (e.currentTarget.style.transform = 'scale(1.1)')}
-            onMouseOut={(e) => (account && gameState !== 'playing') && (e.currentTarget.style.transform = 'scale(1)')}
+            onMouseOver={(e) => ((account || isConnected) && gameState !== 'playing') && (e.currentTarget.style.transform = 'scale(1.1)')}
+            onMouseOut={(e) => ((account || isConnected) && gameState !== 'playing') && (e.currentTarget.style.transform = 'scale(1)')}
           >
             <img 
               src={`/${choice.id}.jpg`} 
@@ -227,7 +267,7 @@ function GamePage() {
         ))}
       </div>
 
-      {/* Resultado del juego */}
+      {/* Resto del código del juego */}
       {gameState === 'playing' && (
         <div style={{
           color: 'white',
@@ -301,7 +341,6 @@ function GamePage() {
         </div>
       )}
 
-      {/* Mensaje de estado */}
       <div style={{
         color: 'white',
         textAlign: 'center',
@@ -310,9 +349,9 @@ function GamePage() {
         zIndex: 1,
         textShadow: '0 0 10px rgba(255,255,255,0.5)'
       }}>
-        <p>{account ? '🎮 ¡Elige tu movimiento!' : '🔐 Conecta tu wallet para jugar'}</p>
+        <p>{(account || isConnected) ? '🎮 ¡Elige tu movimiento!' : '🔐 Conecta MetaMask o Farcaster para jugar'}</p>
         <p style={{ fontSize: '1rem', marginTop: '10px', opacity: 0.8 }}>
-          ✨ Gana para mintear un NFT especial ✨
+          {isConnected ? '✨ Conectado via Farcaster' : '✨ Gana para compartir en Farcaster'}
         </p>
       </div>
 
