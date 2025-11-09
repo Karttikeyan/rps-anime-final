@@ -23,5 +23,19 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    
+    <!-- 🔥 AÑADIDO: Script Farcaster SDK para resolver "Ready not called" -->
+    <script src="https://plau.github.io/farcaster-frame/sdk.js"></script>
+    <script>
+      // Inicializar Farcaster SDK cuando el DOM esté listo
+      document.addEventListener('DOMContentLoaded', function() {
+        if (window.farcaster && window.farcaster.actions && typeof window.farcaster.actions.ready === 'function') {
+          console.log('✅ Farcaster SDK ready() called');
+          window.farcaster.actions.ready();
+        } else {
+          console.log('ℹ️ Farcaster SDK not available in this context');
+        }
+      });
+    </script>
   </body>
 </html>
