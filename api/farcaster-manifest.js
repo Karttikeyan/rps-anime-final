@@ -1,0 +1,29 @@
+export default function handler(request, response) {
+  const manifest = {
+    frame: {
+      name: "Rock, Paper, Scissors",
+      version: "1",
+      iconUrl: "https://rps-anime-final.vercel.app/icon.png",
+      homeUrl: "https://rps-anime-final.vercel.app/",
+      imageUrl: "https://rps-anime-final.vercel.app/scissors.jpg",
+      splashImageUrl: "https://rps-anime-final.vercel.app/splash.png",
+      splashBackgroundColor: "#6200EA",
+      subtitle: "Game",
+      description: "Game Rock Paper Scissors",
+      screenshotUrls: ["https://rps-anime-final.vercel.app/scissors.jpg"],
+      primaryCategory: "games",
+      heroImageUrl: "https://rps-anime-final.vercel.app/rock.jpg",
+      tagline: "Game Rock Paper Scissors",
+      ogTitle: "Game Rock Paper Scissors",
+      ogDescription: "Game Rock Paper Scissors Game"
+    },
+    accountAssociation: {
+      header: "eyJmaWQiOjM0MTAxMywidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweEFDM2E4OUVBOWRBNTY3ZTg2RTk3RkVlODE1YjkwYjgwNGRkMmZjNTUifQ",
+      payload: "eyJkb21haW4iOiJycHMtYW5pbWUtZmluYWwudmVyY2VsLmFwcCJ9",
+      signature: "MAUIgT/9Rc/UPUDuYbJwBO/TOp4nJ9PldIBlcISTT4lxARQ0Pp9mnRY6peeLNAu46Fk8X0LahA2mLwThzz41bhw="
+    }
+  };
+
+  response.setHeader('Content-Type', 'application/json');
+  response.status(200).json(manifest);
+}
