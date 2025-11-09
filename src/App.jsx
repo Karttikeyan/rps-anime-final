@@ -1,14 +1,19 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { useSignIn, useProfile, useUser } from '@farcaster/frame-react'; // 🔥 AÑADIR estos imports
+import { useSignIn, useProfile, useUser } from '@farcaster/frame-react';
 import { useFarcaster } from './useFarcaster';
 import FarcasterFrame from './FarcasterFrame';
 
+// 🔥 IMPORTAR LAS IMÁGENES
+import rockImage from '/rock.jpg';
+import paperImage from '/paper.jpg';
+import scissorsImage from '/scissors.jpg';
+
 function GamePage() {
   const { isConnected, userData, connect } = useFarcaster();
-  const { signIn } = useSignIn(); // 🔥 AÑADIR
-  const { profile } = useProfile(); // 🔥 AÑADIR  
-  const { user, isSigningIn } = useUser(); // 🔥 AÑADIR
+  const { signIn } = useSignIn();
+  const { profile } = useProfile();
+  const { user, isSigningIn } = useUser();
   
   const [isInFrame, setIsInFrame] = useState(false);
   const [account, setAccount] = useState(null);
@@ -42,9 +47,9 @@ function GamePage() {
   }
 
   const choices = [
-    { id: 'rock', name: 'Piedra', emoji: '🪨', color: '#00ffff' },
-    { id: 'paper', name: 'Papel', emoji: '📄', color: '#00ff00' },
-    { id: 'scissors', name: 'Tijera', emoji: '✂️', color: '#ff00ff' }
+    { id: 'rock', name: 'Piedra', emoji: '🪨', color: '#00ffff', image: rockImage },
+    { id: 'paper', name: 'Papel', emoji: '📄', color: '#00ff00', image: paperImage },
+    { id: 'scissors', name: 'Tijera', emoji: '✂️', color: '#ff00ff', image: scissorsImage }
   ];
 
   const connectMetaMask = async () => {
@@ -103,7 +108,6 @@ function GamePage() {
       // Compartir en Farcaster si gana
       if (gameResult === 'ganaste' && isConnected) {
         if (window.confirm('🎉 ¡Ganaste! ¿Quieres compartir en Farcaster?')) {
-          // Simular compartir en Farcaster
           const shareUrl = `https://warpcast.com/~/compose?text=${encodeURIComponent(`🎮 ¡Acabo de ganar en RPS Anime Game! Elegí ${playerChoiceId} vs ${aiChoiceId} de la IA. ¡Juega en: https://rps-anime-final.vercel.app`)}`;
           window.open(shareUrl, '_blank');
         }
@@ -241,7 +245,7 @@ function GamePage() {
         ⚔️ Anime Rock Paper Scissors 🎴
       </h1>
 
-      {/* Área de juego - CON IMÁGENES LOCALES */}
+      {/* Área de juego - CON IMÁGENES IMPORTADAS */}
       <div style={{
         display: 'flex',
         justifyContent: 'center',
@@ -267,7 +271,7 @@ function GamePage() {
             onMouseOut={(e) => ((account || isConnected) && gameState !== 'playing') && (e.currentTarget.style.transform = 'scale(1)')}
           >
             <img 
-              src={`/${choice.id}.jpg`} 
+              src={choice.image} // 🔥 USAR IMAGEN IMPORTADA
               alt={choice.name}
               style={{
                 width: '180px',
