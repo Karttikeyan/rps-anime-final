@@ -4,7 +4,7 @@
     "version": "1",
     "iconUrl": "https://rps-anime-final.vercel.app/",
     "homeUrl": "https://rps-anime-final.vercel.app/",
-    "imageUrl": "https://rps-anime-final.vercel.app/scissors.jpg",
+    ""iconUrl": "https://rps-anime-final.vercel.app/icon-512x512.png",
     "splashImageUrl": "https://rps-anime-final.vercel.app/scissors.jpg",
     "splashBackgroundColor": "#6200EA",
     "subtitle": "Game",
