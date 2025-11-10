@@ -1,20 +1,20 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import sdk from '@farcaster/frame-sdk';  // SDK oficial para Frames/Mini Apps (reemplaza frame-react)
-import { useAuthKit } from '@farcaster/auth-kit';  // Para auth Farcaster (signIn, profile, user)
+import sdk from '@farcaster/frame-sdk';  // Para ready() en Frames
+import { useSignIn, useProfile } from '@farcaster/auth-kit';  // Hooks oficiales (removido useUser, no exportado)
 import { useFarcaster } from './useFarcaster';  // Tu hook custom (mantén si funciona)
 import FarcasterFrame from './FarcasterFrame';  // Componente custom (mantén)
 
-// 🔥 IMPORTAR LAS IMÁGENES (Vite las bundleará correctamente)
+// 🔥 IMPORTAR LAS IMÁGENES
 import rockImage from '/rock.jpg';
 import paperImage from '/paper.jpg';
 import scissorsImage from '/scissors.jpg';
 
-function GamePage() {
-  const { isConnected, userData, connect } = useFarcaster();  // Hook custom
-  const { signIn } = useAuthKit();  // Hook de AuthKit para signIn (reemplaza useSignIn)
-  const { profile } = useAuthKit();  // Hook de AuthKit para profile (reemplaza useProfile)
-  const { user, isSigningIn } = useAuthKit();  // Hook de AuthKit para user (reemplaza useUser)
+function App() {
+  const { isConnected, userData, connect } = useFarcaster();
+  const { signIn } = useSignIn();  // Hook oficial para signIn
+  const { profile } = useProfile();  // Hook oficial para profile (user data)
+  // Removido useUser – no exportado, y no se usa (userData de useFarcaster es suficiente)
   
   const [isInFrame, setIsInFrame] = useState(false);
   const [account, setAccount] = useState(null);
@@ -24,10 +24,10 @@ function GamePage() {
   const [aiChoice, setAiChoice] = useState(null);
   const [result, setResult] = useState('');
 
-  // 🔥 AÑADIDO: Notificar a Farcaster que la app está lista con SDK oficial
+  // 🔥 AÑADIDO: Notificar a Farcaster que la app está lista
   useEffect(() => {
     (async () => {
-      await sdk.actions.ready();  // Usa SDK oficial para ready
+      await sdk.actions.ready();
       console.log('Farcaster SDK ready called');
     })();
   }, []);
@@ -385,4 +385,4 @@ function GamePage() {
   );
 }
 
-export default GamePage;
+export default App;

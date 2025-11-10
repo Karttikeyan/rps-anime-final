@@ -4,20 +4,44 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>RPS Anime Game</title>
-    <!-- Metadatos Farcaster completos -->
-    <meta property="fc:frame" content="vNext" />
-    <meta property="fc:frame:image" content="https://rps-anime-final-94cidxgsg-karttikeyas-projects-1c75e8e1.vercel.app/vite.svg" />
-    <meta property="fc:frame:button:1" content="🪨 Piedra" />
-    <meta property="fc:frame:button:2" content="📄 Papel" />
-    <meta property="fc:frame:button:3" content="✂️ Tijeras" />
-    <meta property="fc:frame:post_url" content="https://rps-anime-final-94cidxgsg-karttikeyas-projects-1c75e8e1.vercel.app/api/frame" />
-    <meta property="og:image" content="https://rps-anime-final-94cidxgsg-karttikeyas-projects-1c75e8e1.vercel.app/vite.svg" />
-    <meta property="og:title" content="RPS Anime Game" />
-    <meta property="og:description" content="Juego de Piedra, Papel o Tijeras con estilo anime" />
-    <script type="module" crossorigin src="/assets/index-DwaNKlF7.js"></script>
+    <title>RPS Anime Game - Rock Paper Scissors</title>
+    
+    <!-- META TAGS CRÍTICOS para OpenGraph -->
+    <meta property="og:title" content="RPS Anime Game 🎮" />
+    <meta property="og:description" content="Play Rock Paper Scissors with anime style! Connect your wallet and start playing." />
+    <meta property="og:image" content="https://rps-anime-final.vercel.app/rock.jpg" />
+    <meta property="og:url" content="https://rps-anime-final.vercel.app/" />
+    <meta property="og:type" content="website" />
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="RPS Anime Game 🎮" />
+    <meta name="twitter:description" content="Play Rock Paper Scissors with anime style!" />
+    <meta name="twitter:image" content="https://rps-anime-final.vercel.app/rock.jpg" />
+    <script type="module" crossorigin src="/assets/index-CTbouB4a.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-CkdaJlZu.css">
   </head>
   <body>
     <div id="root"></div>
+    
+    <!-- 🔥 SDK FARCASTER MEJORADO -->
+    <script>
+      // Cargar SDK dinámicamente desde unpkg
+      (function() {
+        var script = document.createElement('script');
+        script.src = 'https://unpkg.com/@farcaster/frame-sdk@0.1.12';
+        script.onload = function() {
+          if (window.farcaster && window.farcaster.actions) {
+            console.log('✅ Farcaster SDK loaded successfully');
+            window.farcaster.actions.ready();
+          } else {
+            console.log('❌ Farcaster SDK loaded but not properly initialized');
+          }
+        };
+        script.onerror = function() {
+          console.log('❌ Failed to load Farcaster SDK');
+        };
+        document.head.appendChild(script);
+      })();
+    </script>
   </body>
 </html>
