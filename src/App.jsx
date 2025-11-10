@@ -1,19 +1,20 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { useSignIn, useProfile, useUser } from '@farcaster/frame-react';
-import { useFarcaster } from './useFarcaster';
-import FarcasterFrame from './FarcasterFrame';
+import sdk from '@farcaster/frame-sdk';  // SDK oficial para Frames/Mini Apps (reemplaza frame-react)
+import { useAuthKit } from '@farcaster/auth-kit';  // Para auth Farcaster (signIn, profile, user)
+import { useFarcaster } from './useFarcaster';  // Tu hook custom (mantén si funciona)
+import FarcasterFrame from './FarcasterFrame';  // Componente custom (mantén)
 
-// 🔥 IMPORTAR LAS IMÁGENES
+// 🔥 IMPORTAR LAS IMÁGENES (Vite las bundleará correctamente)
 import rockImage from '/rock.jpg';
 import paperImage from '/paper.jpg';
 import scissorsImage from '/scissors.jpg';
 
 function GamePage() {
-  const { isConnected, userData, connect } = useFarcaster();
-  const { signIn } = useSignIn();
-  const { profile } = useProfile();
-  const { user, isSigningIn } = useUser();
+  const { isConnected, userData, connect } = useFarcaster();  // Hook custom
+  const { signIn } = useAuthKit();  // Hook de AuthKit para signIn (reemplaza useSignIn)
+  const { profile } = useAuthKit();  // Hook de AuthKit para profile (reemplaza useProfile)
+  const { user, isSigningIn } = useAuthKit();  // Hook de AuthKit para user (reemplaza useUser)
   
   const [isInFrame, setIsInFrame] = useState(false);
   const [account, setAccount] = useState(null);
@@ -23,12 +24,12 @@ function GamePage() {
   const [aiChoice, setAiChoice] = useState(null);
   const [result, setResult] = useState('');
 
-  // 🔥 AÑADIDO: Notificar a Farcaster que la app está lista
+  // 🔥 AÑADIDO: Notificar a Farcaster que la app está lista con SDK oficial
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.farcaster) {
-      window.farcaster.actions.ready();
+    (async () => {
+      await sdk.actions.ready();  // Usa SDK oficial para ready
       console.log('Farcaster SDK ready called');
-    }
+    })();
   }, []);
 
   // Detectar si estamos dentro del frame de Farcaster
