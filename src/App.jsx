@@ -278,7 +278,8 @@ function App() {
                 width: '180px',
                 height: '180px',
                 borderRadius: '15px',
-                border: `3px solid ${choice.color}`
+                border: `3px solid ${choice.color}`,
+                objectFit: 'cover' // 🔥 AGREGADO: Esto arregla el escalado de imágenes
               }} 
             />
           </button>
