@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';  // ← AÑADE useEffect
+import React, { useEffect } from 'react';  // ← Agregado useEffect
 import {
   isRouteErrorResponse,
   Links,
@@ -8,7 +8,7 @@ import {
   ScrollRestoration,
 } from "react-router";
 
-import { sdk } from '@farcaster/miniapp-sdk';  // ← AÑADE IMPORT DEL SDK
+import { sdk } from '@farcaster/miniapp-sdk';  // ← Import del SDK de Mini App
 
 import type { Route } from "./+types/root";
 
@@ -45,17 +45,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   useEffect(() => {
-    // Inicializa el SDK de Farcaster Mini App para evitar "not properly initialized"
-    const initializeSDK = async () => {
+    // Inicializa el SDK de Farcaster Mini App para ocultar splash y mostrar contenido
+    const initSDK = async () => {
       try {
-        await sdk.actions.ready();  // Llama ready() para mostrar contenido y ocultar splash
+        await sdk.actions.ready();  // Llama ready() – soluciona "not properly initialized"
       } catch (error) {
-        console.warn('Farcaster SDK init failed:', error);  // Log para debug
+        console.warn('Farcaster SDK init failed:', error);  // Log para debug, no rompe app
       }
     };
 
-    initializeSDK();
-  }, []);  // Ejecuta una vez al montar
+    initSDK();
+  }, []);  // Ejecuta solo una vez al montar
 
   return <Outlet />;
 }
