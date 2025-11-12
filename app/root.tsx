@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';  // ← Agregado useEffect
+import React, { useEffect } from 'react';
 import {
   isRouteErrorResponse,
   Links,
@@ -7,8 +7,6 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
-
-import { sdk } from '@farcaster/miniapp-sdk';  // ← Import del SDK de Mini App
 
 import type { Route } from "./+types/root";
 
@@ -33,6 +31,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
+        {/* CDN para Farcaster Mini App SDK – carga global sin bundle issues */}
+        <script type="module" src="https://esm.sh/@farcaster/miniapp-sdk@0.1.10"></script>
       </head>
       <body>
         {children}
@@ -45,17 +45,24 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   useEffect(() => {
-    // Inicializa el SDK de Farcaster Mini App para ocultar splash y mostrar contenido
+    // Espera a que el SDK se cargue, luego inicializa
     const initSDK = async () => {
-      try {
-        await sdk.actions.ready();  // Llama ready() – soluciona "not properly initialized"
-      } catch (error) {
-        console.warn('Farcaster SDK init failed:', error);  // Log para debug, no rompe app
+      if (typeof window !== 'undefined' && (window as any).sdk) {
+        const { sdk } = (window as any);
+        try {
+          await sdk.actions.ready();  // Oculta splash y muestra app
+          console.log('Farcaster SDK initialized successfully!');
+        } catch (error) {
+          console.warn('Farcaster SDK ready failed:', error);
+        }
+      } else {
+        console.warn('SDK not loaded yet – retrying...');
+        setTimeout(initSDK, 500);  // Retry si no está listo
       }
     };
 
     initSDK();
-  }, []);  // Ejecuta solo una vez al montar
+  }, []);
 
   return <Outlet />;
 }
