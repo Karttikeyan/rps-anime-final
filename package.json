@@ -8,16 +8,23 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@farcaster/auth-kit": "^0.8.1",
-    "@farcaster/frame-sdk": "^0.1.12",
+    "@farcaster
+/auth-kit": "^0.8.1",
+    "@farcaster
+/frame-sdk": "^0.1.12",
+    "@farcaster
+/miniapp-sdk": "^0.1.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "viem": "^2.38.6"
   },
   "devDependencies": {
-    "@types/react": "^19.1.13",
-    "@types/react-dom": "^19.1.9",
-    "@vitejs/plugin-react": "^4.3.3",
+    "@types
+/react": "^19.1.13",
+    "@types
+/react-dom": "^19.1.9",
+    "@vitejs
+/plugin-react": "^4.3.3",
     "vite": "^7.1.7"
   },
   "version": "1.0.0",
@@ -34,3 +41,4 @@
   },
   "homepage": "https://github.com/Karttikeyan/rps-anime-final#readme"
 }
+
