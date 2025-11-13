@@ -21,7 +21,7 @@
     "primaryCategory": "games",
     "tags": ["anime", "rps", "game", "farcaster"],
     "heroImageUrl": "https://rps-anime-final.vercel.app/rock.jpg",
-    "tagline": "¡Juega Rock, Paper, Scissors ahora!",
+    "tagline": "Juega RPS Anime!",
     "ogTitle": "RPS Anime Game",
     "ogDescription": "El juego de RPS más divertido en Farcaster y Base",
     "noindex": false
