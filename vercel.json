@@ -2,7 +2,7 @@
   "buildCommand": "npm run build",
   "outputDirectory": "public",
   "framework": "remix",
-  "installCommand": "npm ci",
+  "installCommand": "npm ci --legacy-peer-deps",
   "routes": [
     {
       "src": "/.well-known/farcaster.json",
