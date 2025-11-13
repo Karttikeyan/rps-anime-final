@@ -45,35 +45,25 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   useEffect(() => {
+    let retries = 0;
+    const maxRetries = 10;
     const initSDK = async () => {
-      // Espera DOM ready para timing perfecto
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initSDK);
+      if (retries > maxRetries) {
+        console.warn('SDK max retries reached');
         return;
       }
 
-      let retries = 0;
-      const maxRetries = 10;
-      const checkSDK = async () => {
-        if (retries > maxRetries) {
-          console.warn('SDK max retries reached');
-          return;
+      if (typeof window !== 'undefined' && window.sdk && window.sdk.actions) {
+        try {
+          await window.sdk.actions.ready();  // Fix: Oculta splash y muestra app
+          console.log('Farcaster SDK initialized!');
+        } catch (error) {
+          console.warn('SDK ready failed:', error);
         }
-
-        if (typeof window !== 'undefined' && window.sdk && window.sdk.actions) {
-          try {
-            await window.sdk.actions.ready();  // Oculta splash, muestra app
-            console.log('Farcaster SDK initialized!');
-          } catch (error) {
-            console.warn('SDK ready failed:', error);
-          }
-        } else {
-          retries++;
-          setTimeout(checkSDK, 300);  // Retry cada 300ms
-        }
-      };
-
-      checkSDK();
+      } else {
+        retries++;
+        setTimeout(initSDK, 300);  // Retry cada 300ms
+      }
     };
 
     initSDK();
