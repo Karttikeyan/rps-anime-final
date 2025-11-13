@@ -31,8 +31,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
-        {/* CDN para Farcaster Mini App SDK – carga global sin bundle issues */}
-        <script type="module" src="https://esm.sh/@farcaster/miniapp-sdk@0.1.10"></script>
+        {/* CDN Farcaster SDK – carga global */}
+        <script async src="https://unpkg.com/@farcaster/miniapp-sdk@latest/dist/index.umd.js"></script>
       </head>
       <body>
         {children}
@@ -45,19 +45,24 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   useEffect(() => {
-    // Espera a que el SDK se cargue, luego inicializa
+    let retries = 0;
+    const maxRetries = 10;
     const initSDK = async () => {
-      if (typeof window !== 'undefined' && (window as any).sdk) {
-        const { sdk } = (window as any);
+      if (retries > maxRetries) {
+        console.warn('SDK max retries reached');
+        return;
+      }
+
+      if (typeof window !== 'undefined' && window.sdk && window.sdk.actions) {
         try {
-          await sdk.actions.ready();  // Oculta splash y muestra app
-          console.log('Farcaster SDK initialized successfully!');
+          await window.sdk.actions.ready();  // Fix: Oculta splash y muestra app
+          console.log('Farcaster SDK initialized!');
         } catch (error) {
-          console.warn('Farcaster SDK ready failed:', error);
+          console.warn('SDK ready failed:', error);
         }
       } else {
-        console.warn('SDK not loaded yet – retrying...');
-        setTimeout(initSDK, 500);  // Retry si no está listo
+        retries++;
+        setTimeout(initSDK, 300);  // Retry cada 300ms
       }
     };
 
@@ -88,7 +93,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
       <h1>{message}</h1>
       <p>{details}</p>
       {stack && (
-        <pre style={{ width: '100%', padding: '1rem', overflowX: 'auto' }}>
+        <pre style={{ width: '100%', padding: '1rem', overflowX: 'auto' }>
           <code>{stack}</code>
         </pre>
       )}
