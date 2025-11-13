@@ -1,9 +1,15 @@
 {
   "buildCommand": "npm run build",
-  "outputDirectory": "public",
+  "outputDirectory": "build",
   "framework": "remix",
   "installCommand": "npm ci --legacy-peer-deps",
   "routes": [
+    {
+      "src": "/assets/(.*)",
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable"
+      }
+    },
     {
       "src": "/.well-known/farcaster.json",
       "headers": {
@@ -12,7 +18,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/index.html"
+      "dest": "/"
     }
   ]
 }
