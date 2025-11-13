@@ -1,32 +1,29 @@
 {
+  "miniapp": {
+    "version": "1",
+    "name": "Rock, Paper, Scissors Anime",
+    "subtitle": "Game",
+    "description": "Game Rock Paper Scissors with Anime Style",
+    "iconUrl": "https://rps-anime-final.vercel.app/icon.png",
+    "homeUrl": "https://rps-anime-final.vercel.app/",
+    "splashImageUrl": "https://rps-anime-final.vercel.app/scissors.png",
+    "splashBackgroundColor": "#6200EA",
+    "heroImageUrl": "https://rps-anime-final.vercel.app/rock.png",
+    "screenshotUrls": [
+      "https://rps-anime-final.vercel.app/rock.png",
+      "https://rps-anime-final.vercel.app/paper.png",
+      "https://rps-anime-final.vercel.app/scissors.png"
+    ],
+    "primaryCategory": "games",
+    "tags": ["game", "rock-paper-scissors", "anime", "crypto"],
+    "tagline": "Game Rock Paper Scissors",
+    "ogTitle": "RPS Anime Game",
+    "ogDescription": "Play Rock Paper Scissors with Crypto Rewards",
+    "ogImageUrl": "https://rps-anime-final.vercel.app/rock.png"
+  },
   "accountAssociation": {
     "header": "eyJmaWQiOjM0MTAxMywidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweEFDM2E4OUVBOWRBNTY3ZTg2RTk3RkVlODE1YjkwYjgwNGRkMmZjNTUifQ",
     "payload": "eyJkb21haW4iOiJycHMtYW5pbWUtZmluYWwudmVyY2VsLmFwcCJ9",
     "signature": "MAUIgT/9Rc/UPUDuYbJwBO/TOp4nJ9PldIBlcISTT4lxARQ0Pp9mnRY6peeLNAu46Fk8X0LahA2mLwThzz41bhw="
-  },
-  "miniapp": {
-    "version": "1",
-    "name": "Rock, Paper, Scissors Anime",
-    "homeUrl": "https://rps-anime-final.vercel.app/",
-    "iconUrl": "https://rps-anime-final.vercel.app/icon-1024x1024.png",
-    "imageUrl": "https://rps-anime-final.vercel.app/scissors.jpg",
-    "splashImageUrl": "https://rps-anime-final.vercel.app/scissors.jpg",
-    "splashBackgroundColor": "#6200EA",
-    "subtitle": "juego-rps-anime",
-    "description": "Desafía a amigos en un juego interactivo de Piedra, Papel o Tijera con arte anime. ¡Gana puntos y diviértete!",
-    "screenshotUrls": [
-      "https://rps-anime-final.vercel.app/scissors.jpg",
-      "https://rps-anime-final.vercel.app/rock.jpg"
-    ],
-    "primaryCategory": "games",
-    "tags": ["anime", "rps", "game", "farcaster"],
-    "heroImageUrl": "https://rps-anime-final.vercel.app/rock.jpg",
-    "tagline": "Juega RPS Anime!",
-    "ogTitle": "RPS Anime Game",
-    "ogDescription": "El juego de RPS más divertido en Farcaster y Base",
-    "noindex": false
-  },
-  "baseBuilder": {
-    "ownerAddress": "0x3E71d8f02b36AF029F2935891882f0c71236055C"
   }
 }
