@@ -1,11 +1,10 @@
 {
   "name": "rps-anime-final",
   "private": true,
-  "sideEffects": false,
   "type": "module",
   "scripts": {
-    "build": "remix build",
     "dev": "remix dev",
+    "build": "remix build",
     "start": "remix-serve build/index.js",
     "type-check": "tsc"
   },
@@ -25,11 +24,13 @@
     "@remix-run/dev": "^2.8.1",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "esbuild": "^0.25.0",
     "typescript": "^5.3.3"
   },
   "engines": {
     "node": ">=20.0.0"
+  },
+  "overrides": {
+    "esbuild": "^0.25.0"
   },
   "version": "1.0.0",
   "description": "RPS Anime Game",
@@ -44,7 +45,4 @@
     "url": "https://github.com/Karttikeyan/rps-anime-final/issues"
   },
   "homepage": "https://github.com/Karttikeyan/rps-anime-final#readme"
-}
-"overrides": {
-  "esbuild": "^0.25.0"
 }
