@@ -31,8 +31,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
-        {/* CDN Farcaster SDK – carga global */}
-        <script async src="https://unpkg.com/@farcaster/miniapp-sdk@latest/dist/index.umd.js"></script>
       </head>
       <body>
         {children}
@@ -45,27 +43,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   useEffect(() => {
-    let retries = 0;
-    const maxRetries = 10;
     const initSDK = async () => {
-      if (retries > maxRetries) {
-        console.warn('SDK max retries reached');
-        return;
-      }
-
-      if (typeof window !== 'undefined' && window.sdk && window.sdk.actions) {
-        try {
-          await window.sdk.actions.ready();  // Fix: Oculta splash y muestra app
-          console.log('Farcaster SDK initialized!');
-        } catch (error) {
-          console.warn('SDK ready failed:', error);
-        }
-      } else {
-        retries++;
-        setTimeout(initSDK, 300);  // Retry cada 300ms
+      if (typeof window !== 'undefined') {
+        const { sdk } = await import('@farcaster/miniapp-sdk');
+        await sdk.actions.ready();
+        console.log('Farcaster SDK initialized!');
       }
     };
-
     initSDK();
   }, []);
 
