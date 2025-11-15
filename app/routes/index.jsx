@@ -5,7 +5,7 @@ export default function Index() {
     const initSDK = async () => {
       if (typeof window !== 'undefined') {
         const { sdk } = await import('@farcaster/miniapp-sdk');
-        await sdk.actions.ready();
+        await sdk.actions.ready({ disableNativeGestures: true });
         console.log('Farcaster SDK initialized!');
       }
     };
