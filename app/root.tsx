@@ -11,6 +11,21 @@ import {
 import type { Route } from "./+types/root";
 import "./app.css";
 
+const frameEmbed = {
+  version: "1",
+  imageUrl: "https://rps-anime-final.vercel.app/icon.png",
+  button: {
+    title: "Play RPS Anime",
+    action: {
+      type: "launch_frame",
+      name: "RPS Anime",
+      url: "https://rps-anime-final.vercel.app",
+      splashImageUrl: "https://rps-anime-final.vercel.app/icon.png",
+      splashBackgroundColor: "#0a1628"
+    }
+  }
+};
+
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
@@ -31,13 +46,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta property="og:url" content="https://rps-anime-final.vercel.app" />
         <meta property="og:type" content="website" />
         
-        {/* Farcaster Frame Meta Tags */}
-        <meta property="fc:frame" content="vNext" />
-        <meta property="fc:frame:image" content="https://rps-anime-final.vercel.app/icon.png" />
-        <meta property="fc:frame:image:aspect_ratio" content="1:1" />
-        <meta property="fc:frame:button:1" content="Play RPS Anime" />
-        <meta property="fc:frame:button:1:action" content="launch_frame" />
-        <meta property="fc:frame:button:1:target" content="https://rps-anime-final.vercel.app" />
+        {/* Farcaster Mini App Embed - NEW FORMAT */}
+        <meta name="fc:frame" content={JSON.stringify(frameEmbed)} />
         
         <Meta />
         <Links />
