@@ -23,9 +23,22 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta property="og:title" content="RPS Anime Game" />
-        <meta property="og:description" content="Play Rock Paper Scissors with anime style!" />
-        <meta property="og:image" content="https://rps-anime-final.vercel.app/rock.jpg" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="RPS Anime - Rock Paper Scissors" />
+        <meta property="og:description" content="Play Rock Paper Scissors with mystical anime style on Farcaster!" />
+        <meta property="og:image" content="https://rps-anime-final.vercel.app/icon.png" />
+        <meta property="og:url" content="https://rps-anime-final.vercel.app" />
+        <meta property="og:type" content="website" />
+        
+        {/* Farcaster Frame Meta Tags */}
+        <meta property="fc:frame" content="vNext" />
+        <meta property="fc:frame:image" content="https://rps-anime-final.vercel.app/icon.png" />
+        <meta property="fc:frame:image:aspect_ratio" content="1:1" />
+        <meta property="fc:frame:button:1" content="Play RPS Anime" />
+        <meta property="fc:frame:button:1:action" content="launch_frame" />
+        <meta property="fc:frame:button:1:target" content="https://rps-anime-final.vercel.app" />
+        
         <Meta />
         <Links />
       </head>
