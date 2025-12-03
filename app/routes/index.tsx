@@ -3,10 +3,10 @@ import { useState, useEffect } from 'react';
 type Choice = 'rock' | 'paper' | 'scissors' | null;
 type Result = 'win' | 'lose' | 'draw' | null;
 
-const choices: { name: Choice; image: string; beats: Choice }[] = [
-  { name: 'rock', image: '/rock.png', beats: 'scissors' },
-  { name: 'paper', image: '/paper.png', beats: 'rock' },
-  { name: 'scissors', image: '/scissors.png', beats: 'paper' },
+const choices: { name: Choice; image: string; beats: Choice; kanji: string }[] = [
+  { name: 'rock', image: '/rock.png', beats: 'scissors', kanji: '石' },
+  { name: 'paper', image: '/paper.png', beats: 'rock', kanji: '紙' },
+  { name: 'scissors', image: '/scissors.png', beats: 'paper', kanji: '鋏' },
 ];
 
 export default function Index() {
@@ -63,7 +63,7 @@ export default function Index() {
       }
       
       setIsPlaying(false);
-    }, 500);
+    }, 600);
   };
 
   const resetGame = () => {
@@ -74,92 +74,100 @@ export default function Index() {
 
   const getResultMessage = () => {
     switch (result) {
-      case 'win': return 'You Win!';
-      case 'lose': return 'You Lose!';
-      case 'draw': return 'Draw!';
+      case 'win': return 'VICTORY';
+      case 'lose': return 'DEFEAT';
+      case 'draw': return 'DRAW';
       default: return '';
     }
   };
 
-  const getResultColor = () => {
+  const getResultClass = () => {
     switch (result) {
-      case 'win': return 'text-green-400';
-      case 'lose': return 'text-red-400';
-      case 'draw': return 'text-yellow-400';
+      case 'win': return 'result-win';
+      case 'lose': return 'result-lose';
+      case 'draw': return 'result-draw';
       default: return '';
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 text-white">
-      <h1 className="text-4xl md:text-5xl font-extrabold mb-2 bg-gradient-to-r from-purple-400 via-pink-500 to-blue-400 bg-clip-text text-transparent">
-        RPS Anime
+    <div className="game-container min-h-screen flex flex-col items-center justify-center p-4 text-white">
+      <img 
+        src="/icon.png" 
+        alt="RPS Anime" 
+        className="logo-image w-24 h-24 md:w-32 md:h-32 mb-4"
+      />
+      
+      <h1 className="game-title text-4xl md:text-6xl font-extrabold mb-1 tracking-wider">
+        RPS ANIME
       </h1>
-      <p className="text-gray-400 mb-8">Rock, Paper, Scissors</p>
+      <p className="subtitle text-sm md:text-base mb-8 font-medium">
+        ROCK PAPER SCISSORS
+      </p>
 
-      <div className="flex gap-8 mb-8 text-xl">
+      <div className="score-container flex gap-8 md:gap-12 px-8 py-4 mb-8">
         <div className="text-center">
-          <p className="text-gray-400 text-sm">You</p>
-          <p className="font-bold text-2xl">{score.player}</p>
+          <p className="text-gray-400 text-xs uppercase tracking-widest mb-1">You</p>
+          <p className="score-number font-bold text-3xl md:text-4xl">{score.player}</p>
         </div>
-        <div className="text-gray-500">vs</div>
+        <div className="vs-text flex items-center text-2xl font-bold">VS</div>
         <div className="text-center">
-          <p className="text-gray-400 text-sm">CPU</p>
-          <p className="font-bold text-2xl">{score.computer}</p>
+          <p className="text-gray-400 text-xs uppercase tracking-widest mb-1">CPU</p>
+          <p className="score-number font-bold text-3xl md:text-4xl">{score.computer}</p>
         </div>
       </div>
 
       {result && (
         <div className="mb-8 text-center">
-          <div className="flex justify-center gap-8 mb-4">
+          <div className="flex justify-center gap-6 md:gap-12 mb-6">
             <div className="text-center">
-              <p className="text-sm text-gray-400 mb-2">You chose</p>
+              <p className="text-gray-400 text-xs uppercase tracking-widest mb-3">Your Choice</p>
               <img 
                 src={choices.find(c => c.name === playerChoice)?.image} 
                 alt={playerChoice || ''} 
-                className="w-20 h-20 object-contain"
+                className="result-image w-24 h-24 md:w-32 md:h-32 object-contain"
               />
             </div>
             <div className="text-center">
-              <p className="text-sm text-gray-400 mb-2">CPU chose</p>
+              <p className="text-gray-400 text-xs uppercase tracking-widest mb-3">CPU Choice</p>
               <img 
                 src={choices.find(c => c.name === computerChoice)?.image} 
                 alt={computerChoice || ''} 
-                className="w-20 h-20 object-contain"
+                className="result-image w-24 h-24 md:w-32 md:h-32 object-contain"
               />
             </div>
           </div>
-          <p className={`text-3xl font-bold ${getResultColor()}`}>
+          <p className={`text-4xl md:text-5xl font-extrabold mb-6 tracking-widest ${getResultClass()}`}>
             {getResultMessage()}
           </p>
           <button
             onClick={resetGame}
-            className="mt-4 px-6 py-2 bg-purple-600 hover:bg-purple-700 rounded-full font-semibold transition-all"
+            className="play-again-btn"
           >
-            Play Again
+            Battle Again
           </button>
         </div>
       )}
 
       {!result && (
         <>
-          <p className="text-gray-400 mb-6">Choose your move!</p>
+          <p className="prompt-text text-lg md:text-xl mb-8 font-medium tracking-wide">
+            Choose Your Element
+          </p>
           <div className="flex justify-center gap-4 md:gap-8">
             {choices.map((choice) => (
               <button
                 key={choice.name}
                 onClick={() => handleChoice(choice.name)}
                 disabled={isPlaying}
-                className={`choice-button p-4 rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 border-2 border-purple-500/30 hover:border-purple-400 anime-glow ${
-                  isPlaying ? 'opacity-50 cursor-not-allowed' : ''
-                }`}
+                className="choice-button w-28 h-28 md:w-36 md:h-36 flex flex-col items-center justify-center"
               >
                 <img 
                   src={choice.image} 
                   alt={choice.name || ''} 
-                  className="w-20 h-20 md:w-24 md:h-24 object-contain"
+                  className="w-20 h-20 md:w-28 md:h-28 object-contain"
                 />
-                <p className="mt-2 text-sm font-medium capitalize text-gray-300">
+                <p className="choice-label">
                   {choice.name}
                 </p>
               </button>
@@ -168,7 +176,7 @@ export default function Index() {
         </>
       )}
 
-      <p className="mt-12 text-xs text-gray-500">
+      <p className="footer-text mt-12 text-xs uppercase tracking-widest">
         Powered by Farcaster
       </p>
     </div>
