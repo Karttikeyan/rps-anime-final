@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  min-height: 100vh;
+}
+
+.anime-glow {
+  box-shadow: 0 0 20px rgba(98, 0, 234, 0.5), 0 0 40px rgba(224, 64, 251, 0.3);
+}
+
+.choice-button {
+  transition: all 0.3s ease;
+}
+
+.choice-button:hover {
+  transform: scale(1.1);
+}
+
+.choice-button:active {
+  transform: scale(0.95);
+}
